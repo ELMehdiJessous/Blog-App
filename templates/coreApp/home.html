@@ -1,2 +1,17 @@
 <h1>hello {{request.user.username}}</h1>
+<form action="" method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="post">
+</form>
+{% for i in posts %}
+    <p>{{i.title}}</p>
+    <p>{{i.content}}</p>
+    {% for y in i.tag.all %}
+        <p>{{y.name}}</p>
+    {% endfor %}
+    <p>{{i.likes_number}}</p>
+{% endfor %}
+
+
 <a href="{% url 'logout' %}">logout</a>
