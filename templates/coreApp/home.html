@@ -1,16 +1,21 @@
 <h1>hello {{request.user.username}}</h1>
+<a href="{% url 'change_name' %}">profile</a>
 <form action="" method="post">
     {% csrf_token %}
     {{form}}
     <input type="submit" value="post">
 </form>
 {% for i in posts %}
+    <p>{{i.user.username}}</p>
     <p>{{i.title}}</p>
     <p>{{i.content}}</p>
     {% for y in i.tag.all %}
         <p>{{y.name}}</p>
     {% endfor %}
-    <p>{{i.likes_number}}</p>
+    <form action="{% url 'add_like' i.id %}" method="post">
+        {% csrf_token %}
+        <p>{{i.likes_number}}<button type="submit">Like</button></p>
+    </form>
 {% endfor %}
 
 

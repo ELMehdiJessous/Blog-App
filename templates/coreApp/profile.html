@@ -1,0 +1,27 @@
+<h1>hello {{request.user.username}}</h1>
+<a href="{% url 'home' %}">home</a>
+
+<form action="{% url 'change_name' %}" method="post">
+    {% csrf_token %}
+    <h3>you can change your name & password</h3>
+    <input type="text" placeholder="New Name" name="newName">
+    <input type="password" placeholder="New password" name="newPassword">
+    <input type="submit" value="change!">
+</form>
+{% if error %}
+    <p>{{error}}</p>
+{% endif %}
+
+{% for i in posts %}
+    <p>{{i.user.username}}</p>
+    <p>{{i.title}}</p>
+    <p>{{i.content}}</p>
+    {% for y in i.tag.all %}
+        <p>{{y.name}}</p>
+    {% endfor %}
+    <p>{{i.likes_number}}</p>
+    <form action="{% url 'delete_post' i.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="delete">
+    </form><br>
+{% endfor %}
